@@ -54,4 +54,22 @@ class VehiculeModel extends AbstractModel{
 
         return $tab;
     }
+
+    public function getVehiculeById(int $id){
+        $res = $this->getById("vehicule", $id);
+
+        $agence = new Agence( $this->getById("agence", $res['id_agence']) );
+        $v = null;
+       
+        if( $res['type'] == "camion" ){
+            $v = new Camion($res);
+        }else if( $res['type'] == "voiture" ){
+            $v = new Voiture($res);
+        }else if( $res['type'] == "moto" ){
+            $v = new DeuxRoues($res);
+        }
+
+        $v->setAgence($agence);
+        return $v;
+    }
 }

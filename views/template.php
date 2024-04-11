@@ -16,9 +16,14 @@
             <a class="btn btn-success" href=".">Home</a>
             
             <?php if(isset($_SESSION["user"])): ?>
-                <a class="btn btn-success" href="?actionAdmin=liste">Users</a>
-                <a class="btn btn-success" href="?actionAgence=agence">Agence</a>
-                <a class="btn btn-success" href="?actionVehicule=vehicule">Véhicule</a>
+
+                <?php if($_SESSION["ROLE"] == "ADMIN"): ?>
+                    <a class="btn btn-success" href="?actionAdmin=liste">Users</a>
+                    <a class="btn btn-success" href="?actionAgence=agence">Agence</a>
+                    <a class="btn btn-success" href="?actionVehicule=vehicule">Véhicule</a>
+                <?php endif; ?>
+
+                <a class="btn btn-primary" href="?actionUser=compte&id=<?= unserialize($_SESSION["user"])->getId(); ?> ">Mon compte</a>
                 <a class="btn btn-danger" href="?actionUser=deconnexion">Déconnexion</a>
                 
             <?php else: ?>
@@ -44,5 +49,6 @@
     </footer>
     <?php unset($_SESSION["errors"]) ?>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </html>
