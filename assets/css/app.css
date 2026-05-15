@@ -1,0 +1,630 @@
+/**
+ * LocAuto Pro — identité premium (confiance, sobriété, références grandes marques)
+ * Polices : charger via <link> dans template.php (évite @import bloquant)
+ */
+:root {
+  --lp-navy: #0a1628;
+  --lp-navy-soft: #132a42;
+  --lp-ink: #0f172a;
+  --lp-muted: #64748b;
+  --lp-cream: #f4f1eb;
+  --lp-cream-dark: #e8e4db;
+  --lp-white: #ffffff;
+  --lp-gold: #c5a059;
+  --lp-gold-light: #dcc698;
+  --lp-gold-dim: rgba(197, 160, 89, 0.35);
+  --lp-success: #1d6b4a;
+  --lp-radius: 14px;
+  --lp-radius-sm: 10px;
+  --lp-shadow: 0 4px 24px rgba(10, 22, 40, 0.08);
+  --lp-shadow-hover: 0 20px 50px rgba(10, 22, 40, 0.14);
+  --lp-font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --lp-font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --lp-nav-h: 72px;
+
+  /* Bootstrap bridge */
+  --bs-body-font-family: var(--lp-font-sans);
+  --bs-body-color: var(--lp-ink);
+  --bs-body-bg: var(--lp-cream);
+  --bs-primary: #132a42;
+  --bs-primary-rgb: 19, 42, 66;
+  --bs-secondary: #64748b;
+  --bs-success: var(--lp-success);
+  --bs-border-radius: var(--lp-radius-sm);
+  --bs-link-color: #1e4976;
+  --bs-link-hover-color: var(--lp-gold);
+}
+
+/* ——— Base ——— */
+.lap-body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-feature-settings: "kern" 1, "liga" 1;
+  background-color: var(--lp-cream);
+  background-image:
+    radial-gradient(ellipse 120% 80% at 100% -20%, rgba(197, 160, 89, 0.12), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 0% 100%, rgba(19, 42, 66, 0.06), transparent 45%);
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1,
+h2,
+h3,
+.display-4,
+.navbar-brand .lap-brand-serif {
+  font-family: var(--lp-font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+h4,
+h5,
+h6,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--lp-font-sans);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ——— Navbar ——— */
+.lap-navbar {
+  background: rgba(10, 22, 40, 0.88) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(197, 160, 89, 0.22);
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  min-height: var(--lp-nav-h);
+  transition: box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.lap-navbar.lap-navbar--scrolled {
+  background: rgba(10, 22, 40, 0.96) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.lap-navbar .navbar-brand {
+  font-family: var(--lp-font-display);
+  font-size: 1.65rem;
+  letter-spacing: 0.02em;
+  color: var(--lp-white) !important;
+}
+
+.lap-navbar .navbar-brand .lap-brand-accent {
+  color: var(--lp-gold-light) !important;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.lap-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.85rem !important;
+  border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.lap-navbar .nav-link:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.lap-navbar .nav-link.active {
+  background: rgba(197, 160, 89, 0.22);
+  color: #fff !important;
+}
+
+.lap-navbar .btn {
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.45rem 1.15rem;
+}
+
+.lap-navbar .btn-outline-light {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+.lap-navbar .btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+
+.lap-navbar .btn-primary {
+  background: linear-gradient(135deg, var(--lp-gold) 0%, var(--lp-gold-light) 100%);
+  border: none;
+  color: var(--lp-navy) !important;
+  box-shadow: 0 4px 16px rgba(197, 160, 89, 0.35);
+}
+
+.lap-navbar .btn-primary:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 22px rgba(197, 160, 89, 0.45);
+  color: var(--lp-navy) !important;
+}
+
+.lap-navbar .btn-danger {
+  background: rgba(180, 60, 60, 0.9);
+  border: none;
+  border-radius: 999px;
+}
+
+.lap-navbar .text-white-50 {
+  color: rgba(220, 198, 152, 0.65) !important;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ——— Hero ——— */
+.hero-pattern {
+  background:
+    linear-gradient(145deg, var(--lp-navy) 0%, var(--lp-navy-soft) 42%, #1a3550 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding-top: 5rem !important;
+  padding-bottom: 5.5rem !important;
+}
+
+.hero-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      -68deg,
+      transparent,
+      transparent 100px,
+      rgba(197, 160, 89, 0.04) 100px,
+      rgba(197, 160, 89, 0.04) 101px
+    );
+  pointer-events: none;
+}
+
+.hero-pattern::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 85% 25%, rgba(197, 160, 89, 0.18), transparent 42%),
+    radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.06), transparent 38%);
+  pointer-events: none;
+}
+
+.hero-pattern .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-pattern .text-white-50,
+.hero-pattern .text-white-75 {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.hero-pattern .lead {
+  font-weight: 400;
+  max-width: 34rem;
+  line-height: 1.65;
+  font-size: 1.15rem;
+}
+
+.hero-pattern h1.display-4 {
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  line-height: 1.12;
+}
+
+.hero-pattern .btn-light {
+  background: var(--lp-white);
+  color: var(--lp-navy) !important;
+  border: none;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.85rem 1.75rem;
+  box-shadow: var(--lp-shadow);
+}
+
+.hero-pattern .btn-light:hover {
+  background: var(--lp-gold-light);
+  color: var(--lp-navy) !important;
+}
+
+.hero-pattern .btn-outline-light {
+  border-radius: 999px;
+  border-width: 2px;
+  font-weight: 600;
+  padding: 0.85rem 1.75rem;
+}
+
+.hero-pattern .btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.hero-promo-card {
+  border-radius: var(--lp-radius);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+.hero-promo-card .h4 {
+  font-family: var(--lp-font-display);
+  font-weight: 400;
+  color: #fff;
+}
+
+/* Trust strip */
+.lap-trust-strip {
+  background: var(--lp-white);
+  border-top: 1px solid var(--lp-cream-dark);
+  border-bottom: 1px solid var(--lp-cream-dark);
+  box-shadow: var(--lp-shadow);
+}
+
+.lap-trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 0;
+}
+
+.lap-trust-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(197, 160, 89, 0.2), rgba(19, 42, 66, 0.1));
+  color: var(--lp-navy-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.lap-trust-item h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  color: var(--lp-ink);
+}
+
+.lap-trust-item p {
+  font-size: 0.85rem;
+  color: var(--lp-muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+@media (min-width: 768px) {
+  .lap-trust-divider {
+    border-right: 1px solid var(--lp-cream-dark);
+    padding-right: 1.5rem;
+    margin-right: 0;
+    min-height: 100%;
+  }
+}
+
+/* ——— Section CTA accueil ——— */
+.lap-section-cta {
+  background: var(--lp-white);
+  border-top: 1px solid var(--lp-cream-dark);
+}
+
+.lap-section-cta h2 {
+  font-family: var(--lp-font-display);
+  font-size: 1.75rem;
+  color: var(--lp-navy);
+}
+
+/* ——— Catalogue header ——— */
+.lap-page-header {
+  background: linear-gradient(180deg, var(--lp-white) 0%, var(--lp-cream) 100%);
+  border-bottom: 1px solid var(--lp-cream-dark);
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.lap-page-header .lap-badge-pill {
+  background: var(--lp-navy) !important;
+  color: var(--lp-gold-light) !important;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+}
+
+.lap-page-header h1 {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  color: var(--lp-navy);
+  font-family: var(--lp-font-display);
+  font-weight: 400;
+}
+
+/* ——— Cards véhicules ——— */
+.card-vehicle {
+  border: 1px solid rgba(19, 42, 66, 0.08);
+  border-radius: var(--lp-radius);
+  box-shadow: var(--lp-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.2s;
+  overflow: hidden;
+  background: var(--lp-white);
+}
+
+.card-vehicle:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--lp-shadow-hover);
+  border-color: var(--lp-gold-dim);
+}
+
+.card-vehicle .card-img-top {
+  height: 210px;
+  object-fit: cover;
+}
+
+.card-vehicle .btn-success {
+  background: linear-gradient(135deg, #1d6b4a 0%, #259065 100%);
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.card-vehicle .btn-success:hover {
+  filter: brightness(1.06);
+}
+
+.card-vehicle .text-primary {
+  color: var(--lp-navy-soft) !important;
+  font-weight: 800;
+}
+
+/* ——— Filtres ——— */
+.filter-panel {
+  background: var(--lp-white);
+  border-radius: var(--lp-radius);
+  box-shadow: var(--lp-shadow);
+  border: 1px solid rgba(19, 42, 66, 0.06);
+}
+
+.filter-panel .btn-primary {
+  background: var(--lp-navy-soft);
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.filter-panel .btn-primary:hover {
+  background: var(--lp-navy);
+}
+
+.filter-panel .btn-outline-secondary {
+  border-radius: 999px;
+  border-color: var(--lp-cream-dark);
+  color: var(--lp-muted);
+}
+
+.filter-panel .form-control,
+.filter-panel .form-select {
+  border-radius: var(--lp-radius-sm);
+  border-color: #dde2e8;
+}
+
+.filter-panel .form-control:focus,
+.filter-panel .form-select:focus {
+  border-color: var(--lp-gold);
+  box-shadow: 0 0 0 0.2rem rgba(197, 160, 89, 0.22);
+}
+
+/* ——— Boutons globaux (la navbar surcharge avec .lap-navbar .btn-primary) ——— */
+.btn-primary {
+  background: var(--lp-navy-soft);
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 0.6rem 1.4rem;
+}
+
+.btn-primary:hover {
+  background: var(--lp-navy);
+}
+
+.btn-lg {
+  padding: 0.85rem 1.6rem;
+}
+
+/* ——— Footer ——— */
+.lap-footer {
+  background: linear-gradient(180deg, var(--lp-navy) 0%, #050a12 100%);
+  color: rgba(255, 255, 255, 0.88);
+  margin-top: 4rem !important;
+  padding-top: 4rem !important;
+  padding-bottom: 3rem !important;
+  border-top: 3px solid var(--lp-gold);
+}
+
+.lap-footer h6 {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.14em !important;
+  color: var(--lp-gold-light) !important;
+  font-weight: 700 !important;
+}
+
+.lap-footer a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.lap-footer a:hover {
+  color: var(--lp-gold-light);
+}
+
+.lap-footer hr {
+  border-color: rgba(197, 160, 89, 0.25);
+  opacity: 1;
+}
+
+/* ——— Auth cards ——— */
+.lap-auth-shell {
+  min-height: calc(100vh - var(--lp-nav-h) - 120px);
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.lap-auth-shell .card {
+  border: 1px solid rgba(19, 42, 66, 0.08);
+  border-radius: var(--lp-radius);
+  box-shadow: var(--lp-shadow-hover);
+}
+
+.lap-auth-shell .card h1 {
+  font-family: var(--lp-font-display);
+  color: var(--lp-navy);
+}
+
+.lap-auth-shell .form-control {
+  border-radius: var(--lp-radius-sm);
+}
+
+/* ——— Tables & formulaires ——— */
+.table thead th {
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lp-muted);
+  border-bottom-width: 1px;
+}
+
+.form-floating > label {
+  color: var(--lp-muted);
+}
+
+.alert-dismissible .btn-close {
+  padding: 0.65rem 1rem;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+}
+
+.breadcrumb a {
+  color: var(--lp-navy-soft);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--lp-gold);
+}
+
+/* ——— Admin parc header (cohérence) ——— */
+.admin-parc-header,
+.admin-accueil-hero {
+  border-bottom: 3px solid var(--lp-gold) !important;
+}
+
+.stat-pill {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  border-radius: 999px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge.text-bg-secondary {
+  background: var(--lp-navy-soft) !important;
+  font-weight: 600;
+}
+
+.lap-chip-type {
+  background: var(--lp-navy-soft) !important;
+  color: #fff !important;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+}
+
+.lap-chip-state {
+  background: rgba(197, 160, 89, 0.2) !important;
+  color: var(--lp-navy) !important;
+  border: 1px solid var(--lp-gold-dim);
+  font-weight: 600;
+}
+
+.lap-lead-copy {
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.lap-spec-table th {
+  width: 42%;
+  font-weight: 600;
+  color: var(--lp-muted);
+  font-size: 0.9rem;
+}
+
+.lap-spec-table td {
+  font-weight: 500;
+  color: var(--lp-ink);
+}
+
+.lap-agency-card {
+  border-left: 3px solid var(--lp-gold) !important;
+}
+
+.lap-price-tag {
+  font-family: var(--lp-font-display);
+  color: var(--lp-navy-soft) !important;
+}
+
+.lap-display-sub {
+  font-family: var(--lp-font-display);
+  font-weight: 400;
+  color: var(--lp-navy);
+}
+
+.lap-suggest-card .card-footer {
+  padding-top: 0;
+}
+
+.lap-checklist li {
+  margin-bottom: 0.35rem;
+}
+
+.lap-input-date {
+  border-radius: var(--lp-radius-sm);
+}
+
+.lap-res-form-card .btn-success {
+  background: linear-gradient(135deg, #1d6b4a 0%, #259065 100%);
+  border: none;
+}
+
+/* ——— Panneaux formulaires (ex. ajout véhicule) ——— */
+.lap-panel-header {
+  background: linear-gradient(135deg, var(--lp-navy) 0%, var(--lp-navy-soft) 100%);
+  color: #fff;
+  border-bottom: 2px solid var(--lp-gold);
+  text-align: center;
+  padding: 1.25rem 1rem;
+}
+
+.lap-panel-header h3 {
+  font-family: var(--lp-font-display);
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: 0.02em;
+}

@@ -1,47 +1,53 @@
-<?php 
+<?php
+class Reservation {
+    private int $id_user;
+    private int $id_vehicule;
+    private ?string $message = null;   // ajouter cette propriété
+    private ?string $debut = null;
+    private ?string $fin = null;
+    private ?string $date_reservation = null;
+    private ?User $personne = null;
+    private ?Vehicule $vehicule = null;
 
-class Reservation{
-    private $personne;
-    private $vehicule;
-    private $date_reservation;
-	private $debut;
-	private $fin;
+    public function __construct(array $data = []) {
+        foreach ($data as $key => $value) {
+            if(property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+    }
 
-	public function __construct(array $data = []){
+    // --- Getters ---
+    public function getMessage(): ?string {
+        return $this->message;
+    }
 
-		foreach($data as $key => $value){
-			//création des set...
-			$methode = "set" . ucfirst($key);
+    public function getDebut(): ?string {
+        return $this->debut;
+    }
 
-			//test si le setter existe
-			if( method_exists($this, $methode) ){
-				//appel du setter et on passe le '$value' en paramètre
-				$this->$methode($value);
-			}
-		}
-	}
+    public function getFin(): ?string {
+        return $this->fin;
+    }
 
-    public function getPersonne(): User {return $this->personne;}
+    public function getPersonne(): ?User {
+        return $this->personne;
+    }
 
-	public function getVehicule(): Vehicule {return $this->vehicule;}
+    public function getVehicule(): ?Vehicule {
+        return $this->vehicule;
+    }
 
-	public function getDateReservation() {return $this->date_reservation;}
+    // --- Setters ---
+    public function setPersonne(User $u): void {
+        $this->personne = $u;
+    }
 
-	public function getDebut() {return $this->debut;}
+    public function setVehicule(Vehicule $v): void {
+        $this->vehicule = $v;
+    }
 
-	public function getFin() {return $this->fin;}
-
-	public function setPersonne(User $personne): void {$this->personne = $personne;}
-
-	public function setVehicule(Vehicule $vehicule): void {$this->vehicule = $vehicule;}
-
-	public function setDateReservation( $date_reservation): void {$this->date_reservation = $date_reservation;}
-
-	public function setDebut( $debut): void {$this->debut = $debut;}
-
-	public function setFin( $fin): void {$this->fin = $fin;}
-
-	
-
-	
+    public function setMessage(string $msg): void {
+        $this->message = $msg;
+    }
 }

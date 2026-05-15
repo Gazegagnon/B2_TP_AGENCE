@@ -1,26 +1,32 @@
+<?php
+/** @var array<int, Agence> $agences @var string $token */
+?>
+<div class="container py-4">
+    <h1 class="h3 fw-bold mb-1">Nos agences partenaires</h1>
+    <p class="text-muted small mb-4">Points de retrait et informations</p>
 
-    <h2 class="text-center">Liste agence</h2>
-
-    <table class="table table-striped">
-        <tr class="table-dark">
-            <td>Nom</td>
-            <td>Adresse</td>
-            <td>Action</td>
-        </tr>
-
-        <?php foreach($agences as $agence): ?>
-            <tr>
-                <td> <?= $agence->getNom(); ?> </td>
-                <td> <?= $agence->getAdresse().", ".$agence->getVille(); ?> </td>
-                <td>
-                    <a href="?actionAdmin=update&id=<?= $agence->getId(); ?>">U</a>
-                    <form action="" method="post" class="d-inline">
-                        <input type="hidden" name="id" value="<?= $agence->getId(); ?>">
-                        <input type="hidden" name="token" value="<?= $token; ?>">
-                        <input type="submit" value="X">
-                    </form>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-
-    </table>
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th class="text-end">Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($agences as $agence): ?>
+                    <tr>
+                        <td><strong><?= htmlspecialchars($agence->getNom()) ?></strong></td>
+                        <td><?= htmlspecialchars($agence->getAdresse()) ?>, <?= htmlspecialchars((string)$agence->getCp()) ?> <?= htmlspecialchars($agence->getVille()) ?></td>
+                        <td class="text-end">
+                            <span class="badge text-bg-light text-muted">Édition à prévoir</span>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

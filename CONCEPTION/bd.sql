@@ -50,7 +50,7 @@ CREATE TABLE reserver(
    id_vehicule INT,
    date_reservation DATETIME,
    debut DATETIME,
-   fin DATETIME
+   fin DATETIME,
    PRIMARY KEY(id_user, id_vehicule, date_reservation),
    FOREIGN KEY(id_user) REFERENCES Personne(id),
    FOREIGN KEY(id_vehicule) REFERENCES vehicule(id),

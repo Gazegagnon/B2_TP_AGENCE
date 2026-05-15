@@ -1,29 +1,25 @@
 <?php
+class AgenceController extends AbstractController
+{
+    public function httpAgence()
+    {
+        $action = $_GET['action'] ?? '';
+        if (!$this->isAdmin()) $this->redirect("?action=connexion");
 
-class AgenceController extends AbstractController{
+        $agMdl = new AgenceModel();
 
-    public function httpAgence(){
+        switch ($action) {
+            case "agence_liste":
+            case "agence":
+                $this->render("agence/index", [
+                    "agences" => $agMdl->getAllAgences(),
+                    "token" => $this->getToken()
+                ], 'Agences | LocAuto Pro');
+                break;
 
-        if( isset($_GET['actionAgence']) ){
-
-            $agMdl = new AgenceModel();
-            $action = $_GET['actionAgence'];
-        
-            if( !$this->isAdmin() ){
-                header("location: ?actionUser=connexion");
-                exit;
-            }
-
-            switch($action){
-                case "agence":
-                    $agences = $agMdl->getAllAgnces();
-                    $this->render("agence/index", [
-                        "agences" => $agences,
-                        "token"   => $this->getToken()
-                    ]);
-                    break;
-            }
+            default:
+                $this->render("404/404", ["erreur" => "Action agence inconnue"], 'Erreur | LocAuto Pro');
+                break;
         }
-
     }
 }

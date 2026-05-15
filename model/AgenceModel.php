@@ -1,41 +1,21 @@
-<?php 
+<?php
+class AgenceModel extends AbstractModel
+{
+    protected string $table = "agence";
+    protected string $primaryKey = "id";
 
-class AgenceModel extends AbstractModel{
+    public function getAgenceById(int $id): ?Agence
+    {
+        $res = $this->getById($id);
+        if (!$res) return null;
 
-    
-    public function getAgenceById($id){
-        $res = $this->getById("agence", $id);
-
-        extract($res);
-        $a = new Agence();
-        $a->setId($id);
-        $a->setNom($nom);
-        $a->setAdresse($adresse);
-        $a->setVille($ville);
-        $a->setCp($cp);
-        $a->setCp($cp);
-        
-        return $a;
+        $agence = new Agence($res);
+        return $agence;
     }
 
-    public function getAllAgnces(){
-        $stmt = $this->executerReq("SELECT * FROM agence");
-
-        $tab = [] ;
-
-        while($res = $stmt->fetch()){
-            extract($res);
-            $a = new Agence();
-            $a->setId($id);
-            $a->setNom($nom);
-            $a->setAdresse($adresse);
-            $a->setVille($ville);
-            $a->setCp($cp);
-
-            $tab[] = $a;
-        }
-
-        return $tab;
+    public function getAllAgences(): array
+    {
+        $tab = $this->getAll();
+        return array_map(fn($row) => new Agence($row), $tab);
     }
-
 }
