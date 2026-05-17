@@ -31,7 +31,7 @@ try {
     // ----- USER -----
     $userActions = [
         'inscription', 'connexion', 'deconnexion', 'compte',
-        'reservation_annuler',
+        'reservation_annuler', 'reservation_finaliser_ligne',
         'client_messagerie', 'client_message_envoyer',
         'admin_dashboard', 'admin_liste', 'admin_update', 'inscriptionAdmin',
         'admin_clients', 'admin_staff',
@@ -40,6 +40,7 @@ try {
         'admin_messagerie', 'admin_message_envoyer',
         'admin_suivi_parc', 'admin_statut_vehicule',
         'admin_parc_voitures', 'admin_parc_motos', 'admin_parc_camions',
+        'admin_reservation_valider_agence',
         'commercial_dashboard',
     ];
 

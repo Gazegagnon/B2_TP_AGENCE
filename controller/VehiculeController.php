@@ -182,7 +182,14 @@ class VehiculeController extends AbstractController
                     } catch (Throwable $e) {
                     }
 
-                    $this->flash('success', 'Votre réservation a bien été enregistrée. Elle apparaît dans « Mes réservations ».');
+                    if ($resMdl->hasReservationWorkflow()) {
+                        $this->flash(
+                            'success',
+                            'Réservation enregistrée (en attente). Depuis votre compte : finalisez le paiement en ligne (démo) ou présentez-vous en agence pour validation, puis récupérez le véhicule sur place.'
+                        );
+                    } else {
+                        $this->flash('success', 'Votre réservation a bien été enregistrée. Elle apparaît dans « Mes réservations ».');
+                    }
                     $this->redirect("?action=compte");
                     return;
                 }

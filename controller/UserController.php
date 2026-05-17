@@ -9,6 +9,7 @@ class UserController extends AbstractController
         'admin_messagerie', 'admin_message_envoyer',
         'admin_suivi_parc', 'admin_statut_vehicule',
         'admin_parc_voitures', 'admin_parc_motos', 'admin_parc_camions',
+        'admin_reservation_valider_agence',
     ];
 
     public function userHttp()
@@ -246,6 +247,20 @@ class UserController extends AbstractController
                     $this->redirect("?action=admin_suivi_parc");
                     break;
 
+                case 'admin_reservation_valider_agence':
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST'
+                        && isset($_POST['id'], $_POST['token'])
+                        && $this->isValidCsrf($_POST['token'])) {
+                        $rid = filter_var($_POST['id'], FILTER_VALIDATE_INT);
+                        if ($rid && (new ReservationModel())->validerEnAgenceParAdmin($rid)) {
+                            $this->flash('success', 'Réservation validée en agence. Le client peut récupérer le véhicule sur place.');
+                        } else {
+                            $this->flash('warning', 'Validation impossible (réservation déjà traitée ou introuvable).');
+                        }
+                    }
+                    $this->redirect("?action=admin_dashboard");
+                    break;
+
                 case 'admin_parc_voitures':
                     $this->renderParcType('voiture', 'voitures', $counts, $token);
                     break;
@@ -319,6 +334,27 @@ class UserController extends AbstractController
         }
 
         switch ($action) {
+            case "reservation_finaliser_ligne":
+                if (!$this->isConnected() || $this->isAdmin()) {
+                    $this->redirect($this->isAdmin() ? "?action=admin_dashboard" : "?action=compte");
+                    break;
+                }
+                if ($_SERVER['REQUEST_METHOD'] === 'POST'
+                    && isset($_POST['token'], $_POST['id'])
+                    && $this->isValidCsrf($_POST['token'])) {
+                    $uid = (int) ($_SESSION['user_id'] ?? 0);
+                    $rid = filter_var($_POST['id'], FILTER_VALIDATE_INT);
+                    if ($uid && $rid) {
+                        if ((new ReservationModel())->finaliserPaiementEnLigne($rid, $uid)) {
+                            $this->flash('success', 'Paiement en ligne simulé : réservation confirmée. Rendez-vous à l’agence aux dates prévues pour récupérer le véhicule.');
+                        } else {
+                            $this->flash('warning', 'Finalisation impossible (déjà confirmée, annulée ou réservation introuvable).');
+                        }
+                    }
+                }
+                $this->redirect("?action=compte");
+                break;
+
             case "reservation_annuler":
                 if (!$this->isConnected() || $this->isAdmin()) {
                     $this->redirect("?action=compte");
@@ -537,12 +573,28 @@ class UserController extends AbstractController
 
                 $resMdl = new ReservationModel();
                 $reservations = $resMdl->findByUserIdForCompte((int) $userId);
+                $hasWorkflow = $resMdl->hasReservationWorkflow();
+                $needsLiveRefresh = false;
+                if ($hasWorkflow) {
+                    foreach ($reservations as $r) {
+                        $ph = (string) ($r['phase'] ?? '');
+                        if (in_array($ph, ['en_attente', 'en_cours', 'confirmee_ligne', 'confirmee_agence'], true)) {
+                            $needsLiveRefresh = true;
+                            break;
+                        }
+                    }
+                }
+                $extraHead = $needsLiveRefresh
+                    ? '<meta http-equiv="refresh" content="90">' : '';
 
                 $this->render("user/compte", [
                     "user" => $user,
                     "reservations" => $reservations,
                     "token" => $this->getToken(),
                     "support" => $this->clientSupportInfo(),
+                    "hasWorkflow" => $hasWorkflow,
+                    "needsLiveRefresh" => $needsLiveRefresh,
+                    "extraHead" => $extraHead,
                 ], 'Mon compte | LocAuto Pro');
                 break;
 

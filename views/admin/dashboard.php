@@ -246,12 +246,13 @@ $fleet_sample = $fleet_sample ?? [];
                                     <th>Client</th>
                                     <th>Véhicule</th>
                                     <th>Période</th>
+                                    <th>Statut résa.</th>
                                     <th class="text-end">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php if (empty($recent)): ?>
-                                <tr><td colspan="5" class="text-center text-muted py-4">Aucune réservation pour l’instant.</td></tr>
+                                <tr><td colspan="6" class="text-center text-muted py-4">Aucune réservation pour l’instant.</td></tr>
                             <?php else: ?>
                                 <?php foreach ($recent as $row): ?>
                                     <?php
@@ -263,6 +264,15 @@ $fleet_sample = $fleet_sample ?? [];
                                     $fin = !empty($row['fin']) ? date('d/m/Y', strtotime((string) $row['fin'])) : '—';
                                     $idV = (int) ($row['id_vehicule'] ?? 0);
                                     $idU = (int) ($row['id_user'] ?? 0);
+                                    $idRes = (int) ($row['id'] ?? 0);
+                                    $rawSt = (string) ($row['statut_reservation'] ?? '');
+                                    $stBadge = match ($rawSt) {
+                                        'en_attente' => ['En attente', 'warning'],
+                                        'confirmee_ligne' => ['Payée en ligne', 'success'],
+                                        'confirmee_agence' => ['Validée agence', 'success'],
+                                        'annulee' => ['Annulée', 'danger'],
+                                        default => [$rawSt !== '' ? $rawSt : '—', 'secondary'],
+                                    };
                                     ?>
                                     <tr>
                                         <td class="text-nowrap small"><?= $dt ?></td>
@@ -272,7 +282,15 @@ $fleet_sample = $fleet_sample ?? [];
                                         </td>
                                         <td><?= $veh ?></td>
                                         <td class="small text-nowrap"><?= $deb ?> → <?= $fin ?></td>
+                                        <td><span class="badge text-bg-<?= htmlspecialchars($stBadge[1], ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($stBadge[0], ENT_QUOTES, 'UTF-8') ?></span></td>
                                         <td class="text-end text-nowrap">
+                                            <?php if ($idRes > 0 && $rawSt === 'en_attente') : ?>
+                                                <form method="post" action="?action=admin_reservation_valider_agence" class="d-inline">
+                                                    <input type="hidden" name="token" value="<?= htmlspecialchars($token, ENT_QUOTES, 'UTF-8') ?>">
+                                                    <input type="hidden" name="id" value="<?= $idRes ?>">
+                                                    <button type="submit" class="btn btn-sm btn-success" title="Confirme la réservation comme validée en agence">Valider agence</button>
+                                                </form>
+                                            <?php endif; ?>
                                             <a href="?action=vehicule_detail&id=<?= $idV ?>" class="btn btn-sm btn-outline-primary">Fiche véhicule</a>
                                             <a href="?action=admin_update&id=<?= $idU ?>" class="btn btn-sm btn-outline-secondary">Client</a>
                                         </td>
